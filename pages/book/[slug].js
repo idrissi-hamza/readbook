@@ -5,19 +5,26 @@ const Book = ({ book }) => {
   return <div>{book?.attributes?.title}</div>;
 };
 
+export default Book;
+
+
 export async function getServerSideProps({ params }) {
   const { slug } = params;
-  console.log("slug", params);
-  const bookResponse = await fetcher(
+  const booksResponse = await fetcher(
     `${process.env.NEXT_PUBLIC_STRAPI_URL}/books?filters[slug][$eq]=${slug}`
    
-  );
+    );
+    console.log("slug****************8******************",booksResponse);
 
+  if (booksResponse.data.length===0) {
+    return {
+      notFound: true,
+    }
+  }
   // console.log();
   return {
     props: {
-      book: bookResponse.data[0],
+      book: booksResponse.data[0],
     },
   };
 }
-export default Book;

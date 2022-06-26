@@ -46,6 +46,9 @@ export async function getServerSideProps() {
   const books = await fetcher(`${process.env.NEXT_PUBLIC_STRAPI_URL}/books?pagination[page]=1&pagination[pageSize]=2`);
 
   console.log(books);
+  
+
+
   return {
     props: {
       books,
